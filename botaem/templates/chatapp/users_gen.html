@@ -1,0 +1,5 @@
+{% for user in online_users %}
+<tr>
+    <td><a class="link-dark" href="{% url 'publicprofile:main_page' user.username %}">{{ user.username }}</a></td>
+</tr>
+{% endfor %}

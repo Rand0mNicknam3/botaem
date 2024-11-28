@@ -1,0 +1,89 @@
+version: "3.10"
+
+services:
+
+  db_django:
+    hostname: db_django
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydb
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data_auth:/var/lib/postgresql/data/
+    networks:
+      - my_project_network
+
+  redis_django_app:
+    hostname: redis_django_app
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redisdata:/data
+    networks:
+      - my_project_network
+    healthcheck:
+      test: ["CMD", "redis_client", "ping"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+
+  django_app:
+    hostname: django_app
+    build: ./botaem
+    depends_on:
+      - redis_django_app
+      - db_django
+    ports:
+      - "8000:8000"
+    networks:
+      - my_project_network
+    volumes:
+      - ./botaem:/botaem\
+    environment:
+      - NGINX_HOSTNAME=nginx_app
+      - REDIS_HOST=redis_django_app
+      - REDIS_PORT=6379
+      - DATABASE_HOST=db_django
+      - DATABASE_USER=myuser
+      - DATABASE_PASSWORD=mypassword
+      - DATABASE_NAME=mydb
+    command: bash -c "sleep 5 && ./migrate.sh && uvicorn botaem.asgi:application --host 0.0.0.0 --port 8000"
+
+  worker:
+    build: ./botaem
+    hostname: worker
+    entrypoint: celery
+    networks:
+      - my_project_network
+    depends_on:
+     - redis_django_app
+     - django_app
+    command: -A botaem.celery.app worker --loglevel=info
+    links:
+      - redis_django_app
+    volumes:
+      - ./botaem:/botaem
+    environment:
+      - BACKEND_HOST=fastapi_app
+      - BACKEND_POST=5000
+      - NGINX_HOSTNAME=nginx_app
+      - REDIS_HOST=redis_django_app
+      - REDIS_PORT=6379
+      - DATABASE_HOST=db_django
+      - DATABASE_USER=myuser
+      - DATABASE_PASSWORD=mypassword
+      - DATABASE_NAME=mydb
+
+networks:
+  my_project_network:
+    external: true
+    
+volumes:
+  postgres_data_auth:

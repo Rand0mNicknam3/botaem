@@ -1,0 +1,47 @@
+{% extends "base/based.html" %}
+
+{% load static %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<script src="https://kit.fontawesome.com/ad58b0a01e.js" crossorigin="anonymous"></script>
+<div class="container mt-5 pt-5">
+
+        <div>
+            <h3>Create new account !</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-dark" type="submit" value="Register">
+        </form>
+        <button type="button" class="btn btn-dark mt-2" onclick="window.location.href='{% provider_login_url 'google' %}'">
+            <i class="fa-brands fa-google"></i> Sign up with Google
+        </button>
+        <div class='mt-2'>
+            <p>Already registered ? &nbsp&nbsp<a href="{% url 'user:login' %}" class="btn btn-dark">Sign in</a></p>
+        </div>
+        
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
+                
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </div>
+
+{% endblock  %}

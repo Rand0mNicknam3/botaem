@@ -1,0 +1,65 @@
+{% extends "base/based.html" %}
+{% load static %}
+{% block content %}
+<main>
+    <h1 class="visually-hidden">Heroes examples</h1>
+    <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img src={% static 'img/jaba_smart.jpeg' %} class="d-block mx-lg-auto img-fluid rounded" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Welcome bro !</h1>
+            <p class="lead">
+                Our project was created to be able to freely share and discuss publicly available information about programming such as: books/articles/courses/podcasts that can be useful to both beginners and more experienced developers.<p class='lead'>But first, it would be great to register or log in :)</p>
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" onclick="window.location.href='{% url 'user:register' %}'" class="btn btn-dark btn-lg px-4 me-md-2">Register</button>
+              <button type="button" onclick="window.location.href='{% url 'user:login' %}'" class="btn btn-success btn-lg px-4">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="b-example-divider"></div>
+  
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <h1 class="display-4 fw-bold">Newbie ? - Start here !</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">On our resource you can find some roadmaps, articles, yt videous and other suggestions</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+          <button type="button" onclick="window.location.href='{% url 'article:article' 'hello-world' %}'" class="btn btn-dark btn-lg px-4 me-sm-3">Learn basics</button>
+          <button type="button"  onclick="window.location.href='{% url 'articles:articles' %}'" class="btn btn-success btn-lg px-4">All articles</button>
+        </div>
+      </div>
+      <div class="overflow-hidden" style="max-height: 30vh;">
+        <div class="container px-5">
+          <img src={% static 'img/jaba_prog.jpeg' %} class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+        </div>
+      </div>
+    </div>
+  
+    <div class="b-example-divider"></div>
+  
+    <div class="container col-xxl-8 px-4 py-5">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img src={% static 'img/jaba_laptop.jpeg' %} class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold lh-1 mb-3">Useful sources</h1>
+          <p class="lead"><dl class="row">
+            <dt class="col-sm-3 mb-3">Base syntax</dt>
+            <dd class="col-sm-9"><a href='https://youtu.be/nLRL_NcnK-4?si=BTl3ldYBQF4ct18F' class='link-dark'>Harvard course</a></dd>
+            <dt class="col-sm-3 mb-3">Base algorithms</dt>
+            <dd class="col-sm-9"><a href='https://youtu.be/KdZ4HF1SrFs?si=XuK6RsQRdiPXbtQs' class='link-dark'>MIPT course</a></dd>
+            <dt class="col-sm-3 mb-3">Answers on everything</dt>
+            <dd class="col-sm-9"><a href='https://stackoverflow.com/' class='link-dark'>Stackoverflow</a></dd>
+            <dt class="col-sm-3 mb-3">Advanced python</dt>
+            <dd class="col-sm-9"><a href='https://youtu.be/SVBPkrs9UFg?si=2tcXJWTh8HU1ff2g' class='link-dark'>Nikita Sobolev</a></dd>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="b-example-divider mb-0"></div>
+  </main>
+{% endblock %}

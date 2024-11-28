@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="{% static 'css/btrap.css' %}">
+  <script src="{% static 'js/btrap_bundle.js' %}"></script>
+<head>
+    <title>{% block title %}Botaem.{% endblock %}</title>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand mx-auto" href="{% url 'home:main' %}">Botaem.</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Botaem.</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'myprofile:main_page' %}">My profile</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'user:register' %}">Register</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    What do you want ?
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" href="{% url 'user:login' %}">Read articles</a></li>
+                    <li><a class="dropdown-item" href="#">Read news</a></li>
+                    <li><a class="dropdown-item" href="{% url 'chatapp:chat' %}">Discuss programming</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                  {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user:logout' %}">Logout</a>
+                  </li>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+</head>
+<body>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer bg-dark text-light p-3 fixed-bottom py-1">
+        <div class="container">
+          <p>&copy; 2024 Lipetsk Switzerland. All rights reserved</p>
+        </div>
+      </footer>
+</body>
+</html>

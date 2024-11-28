@@ -1,0 +1,27 @@
+{% extends "base/based.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content%}
+<div class="container-fluid justify-content-center align-items-center mt-5 mb-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 mt-3">
+        <form class="mt-5" id='article_form'>
+            {{ article_form|crispy}}
+        </form>
+        <form id='aricle_params_form'>
+            {{ article_params_form|crispy }}
+        </form>
+        <button class="btn btn-success" id ="submit_send" type="submit">Create Post</button>
+        <button class="btn btn-dark" type="submit">Cancel</button>
+
+        <div id='validation_errors' class="alert alert-danger" role="alert" style="display: none;">
+
+      </div>
+    </div>
+  </div>
+  <script>
+    var csrfToken = "{{ csrf_token }}";
+  </script>
+  <script src="{% static 'js/articlecreating_script.js' %}"></script>
+{% endblock %}

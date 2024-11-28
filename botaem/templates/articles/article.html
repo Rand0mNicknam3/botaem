@@ -1,0 +1,35 @@
+{% extends "base/based.html" %}
+
+{% load static %}
+
+{% block content %}
+<main class="container mt-5">
+  <script src="https://kit.fontawesome.com/ad58b0a01e.js" crossorigin="anonymous"></script>
+    <article class="card mt-5">
+      <header class="card-header">
+        <div id="notification" style="display: none;">
+          <p id="notification-message"></p>
+        </div>
+        <h1 class="card-title">{{ article.tittle }}</h1>
+        <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-eye"></i> {{ article_params.views }} </p>
+        <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-heart"></i><span id ="likes_amount" > {{ article.likes.count }} </span></p>
+        <p class="card-subtitle mb-2 text-muted">Topic: {{ article_params.topic.name }}</p>
+        <p class="card-subtitle mb-2 text-muted">Author: <a href="{% url 'publicprofile:main_page' article.author.username %}">{{ article.author.username }}</a></p>
+        <p class="card-subtitle mb-2 text-muted">Posted: <time datetime="2023-02-20">{{ article.created_at|date:"d.m.Y H:i" }}</time></p>
+        <button type="button" id='read_later' class="btn btn-sm btn-secondary">Read later</button>
+      </header>
+      <section class="card-body d-flex flex-row">
+        <image src="{{ article.image.url }}" width="auto" height="400" class="order-2 ml-3"> </image>
+        <big class="card-text w-100 font-size"><p>{{ article.content }}</p>
+      </section>
+      <section class="card-body">
+        <button type="button" id='like-button' class="btn btn-sm btn-success">Like</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='{% url 'articles:articles' %}'">To articles list</button>
+    </article>
+    <script src="{% static 'js/article.js' %}"></script>
+    <script>
+      var csrfToken = "{{ csrf_token }}";
+      var articleSlug = "{{ article.slug }}";
+    </script>
+  </main>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base/based.html" %}
+
+{% load static %}
+
+{% block content %}
+<main>
+
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">Articles</h1>
+          <p class="lead text-muted">Here you can find some articles about studying proggraming</p>
+          <p>
+            <a href="#" class="btn btn-primary my-2">Join chat</a>
+            <a href="{% url 'articles:create_article' %}" class="btn btn-secondary my-2">Make an article</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  
+    <div class="album py-5 bg-light">
+      <div class="container">
+  
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for article in articles %}
+          <div class="col">
+            <div class="card shadow-sm">
+              <a href="{% url 'article:article' article.slug %}">
+                <img class="card-img-top" src="{{ article.image.url }}" alt="No image for you boys" width="100%" height="225" loading="lazy">
+              </a>
+              <div class="card-body">
+                <small class="card-text"> by {{ article.author.username }}</small>
+                <p class="card-text"><b>{{ article.tittle }}</b></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">   
+                    <button type="button" onclick="window.location.href='{% url 'article:article' article.slug %}'" class="btn btn-sm btn-success ">View</button>
+                  </div>
+                  <small class="text-muted">{{ article.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+  </main>
+{% endblock %}
+

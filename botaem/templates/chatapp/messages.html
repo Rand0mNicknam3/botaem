@@ -1,0 +1,11 @@
+<div class="row msg_container base_sent mt-4">
+    <div class="col-md-1 col-xs-1 avatar">
+        <img src="{{ msg.get_image }}" class=" d-flex mr-3" style="width: 100px;">
+    </div>
+    <div class="col-md-11 col-xs-11">
+        <div id='messages' class="messages msg_sent">
+            <time><b><a class="link-dark" href="{% url 'publicprofile:main_page' msg.author %}" >{{ msg.author }}</a></b>&nbsp {{ msg.created }} </time>
+            <p>{{ msg.body }}</p>   
+        </div>
+    </div>
+</div>
